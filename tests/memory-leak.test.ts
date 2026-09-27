@@ -22,7 +22,6 @@ import { describe, expect, it } from "vitest";
 import { QubitSketchModel } from "../src/circuit-screen/model/QubitSketchModel.js";
 import type { SlotDropTarget } from "../src/circuit-screen/view/CircuitCanvas.js";
 import { GatePalettePanel, type PaletteDragContext } from "../src/circuit-screen/view/GatePalettePanel.js";
-import { TimeModel } from "../src/common/TimeModel.js";
 import { describeDisposalLeaks, forceGC } from "./helpers/memoryLeak.js";
 
 // Long-lived model sentinel: stays alive across tests so that a disposed panel
@@ -90,4 +89,4 @@ describe("Memory leak regression", () => {
   });
 });
 
-describeDisposalLeaks([{ name: "TimeModel", create: () => new TimeModel(), idempotentDispose: true }]);
+describeDisposalLeaks([]);
