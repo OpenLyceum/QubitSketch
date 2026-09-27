@@ -188,6 +188,9 @@
       "includes": ["tests/**"],
       "linter": {
         "rules": {
+          "nursery": {
+            "useExplicitType": "off"
+          },
           "style": {
             "noNonNullAssertion": "off"
           }
