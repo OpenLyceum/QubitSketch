@@ -196,9 +196,9 @@ export default defineConfig(({ mode }) => {
             includeAssets: ["favicon.ico", "icons/apple-touch-icon.png"],
             manifest: {
               id: name,
-              name: "QubitSketch",
+              name: "Qubit Sketch",
               // biome-ignore lint/style/useNamingConvention: Web App Manifest spec requires snake_case keys
-              short_name: "QubitSketch",
+              short_name: "Qubit Sketch",
               description,
               categories: ["education", "science"],
               // biome-ignore lint/style/useNamingConvention: Web App Manifest spec requires snake_case keys
@@ -235,7 +235,7 @@ export default defineConfig(({ mode }) => {
                   type: "image/png",
                   // biome-ignore lint/style/useNamingConvention: Web App Manifest spec requires snake_case keys
                   form_factor: "wide",
-                  label: "QubitSketch",
+                  label: "Qubit Sketch",
                 },
                 {
                   src: "screenshots/narrow.png",
@@ -243,7 +243,7 @@ export default defineConfig(({ mode }) => {
                   type: "image/png",
                   // biome-ignore lint/style/useNamingConvention: Web App Manifest spec requires snake_case keys
                   form_factor: "narrow",
-                  label: "QubitSketch",
+                  label: "Qubit Sketch",
                 },
               ],
             },
