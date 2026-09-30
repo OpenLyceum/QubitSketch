@@ -55,6 +55,15 @@ export class StringManager {
     return stringProperties.a11y;
   }
 
+  /** Language-independent "q{{index}}" caption for a Bloch sphere. */
+  public getQubitLabelStrings(): {
+    readonly indexPatternStringProperty: ReadOnlyProperty<string>;
+  } {
+    return {
+      indexPatternStringProperty: stringProperties.qubits.indexPatternStringProperty,
+    };
+  }
+
   /**
    * Qubit-count selector readout. Two patterns (singular/plural) keep the count
    * grammatically correct down to "1 qubit"; the fleet uses simple {{count}}

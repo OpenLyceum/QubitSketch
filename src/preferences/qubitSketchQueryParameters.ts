@@ -19,7 +19,14 @@ import { QueryStringMachine } from "scenerystack/query-string-machine";
 import { DEFAULT_QUBITS, MAX_QUBITS, MIN_QUBITS } from "../circuit-screen/model/GateType.js";
 import QubitSketchNamespace from "../QubitSketchNamespace.js";
 
-const qubitSketchQueryParameters = QueryStringMachine.getAll({
+/**
+ * Hash key for a shareable circuit (`#circuit=<encoded>`). The live permalink
+ * is a URL hash, not a search parameter; `CircuitUrlSync` parses that hash
+ * with this same schema via `QueryStringMachine.getAllForString`.
+ */
+export const CIRCUIT_QUERY_KEY = "circuit";
+
+export const qubitSketchQueryParameterSchema = {
   /** Initial number of visible qubit wires. */
   qubits: {
     type: "number" as const,
@@ -27,7 +34,19 @@ const qubitSketchQueryParameters = QueryStringMachine.getAll({
     isValidValue: (value: number) => Number.isInteger(value) && value >= MIN_QUBITS && value <= MAX_QUBITS,
     public: true,
   },
-});
+
+  /**
+   * Encoded circuit for a shared link. Empty when the circuit is blank.
+   * Structure is checked by `deserialize`; any string is accepted here.
+   */
+  [CIRCUIT_QUERY_KEY]: {
+    type: "string" as const,
+    defaultValue: "",
+    public: true,
+  },
+};
+
+const qubitSketchQueryParameters = QueryStringMachine.getAll(qubitSketchQueryParameterSchema);
 
 QubitSketchNamespace.register("qubitSketchQueryParameters", qubitSketchQueryParameters);
 
