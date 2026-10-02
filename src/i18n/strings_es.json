@@ -97,5 +97,14 @@
   "preferences": {
     "title": "Simulación",
     "qubitCount": "Número de cúbits"
+  },
+  "glyphs": {
+    "undo": "↶",
+    "redo": "↷",
+    "decrement": "−",
+    "increment": "+",
+    "previous": "◀",
+    "next": "▶",
+    "remove": "✕"
   }
 }

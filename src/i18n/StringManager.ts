@@ -146,6 +146,19 @@ export class StringManager {
     };
   }
 
+  /** Icon glyphs drawn as text on buttons. */
+  public getGlyphStrings(): {
+    readonly undoStringProperty: ReadOnlyProperty<string>;
+    readonly redoStringProperty: ReadOnlyProperty<string>;
+    readonly decrementStringProperty: ReadOnlyProperty<string>;
+    readonly incrementStringProperty: ReadOnlyProperty<string>;
+    readonly previousStringProperty: ReadOnlyProperty<string>;
+    readonly nextStringProperty: ReadOnlyProperty<string>;
+    readonly removeStringProperty: ReadOnlyProperty<string>;
+  } {
+    return stringProperties.glyphs;
+  }
+
   /** Labels for the OpenQASM export/import dialog. */
   public getQasmStrings(): {
     readonly buttonStringProperty: ReadOnlyProperty<string>;
