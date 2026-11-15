@@ -9,7 +9,7 @@
 import { NumberProperty } from "scenerystack/axon";
 import { Range } from "scenerystack/dot";
 import type { Tandem } from "scenerystack/tandem";
-import { MAX_QUBITS, MIN_QUBITS } from "../circuit-screen/model/GateType.js";
+import { MAX_QUBITS, MIN_QUBITS } from "../common/model/GateType.js";
 import QubitSketchNamespace from "../QubitSketchNamespace.js";
 import qubitSketchQueryParameters from "./qubitSketchQueryParameters.js";
 

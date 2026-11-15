@@ -19,13 +19,13 @@
 import { PatternStringProperty } from "scenerystack/axon";
 import type { Vector2 } from "scenerystack/dot";
 import { Circle, Line, Node, Rectangle, Text } from "scenerystack/scenery";
+import type { CircuitCell } from "../../common/model/GateType.js";
+import { cellGate, cellsEqual, MAX_QUBITS, NUM_STEPS } from "../../common/model/GateType.js";
 import { StringManager } from "../../i18n/StringManager.js";
 import QubitSketchColors from "../../QubitSketchColors.js";
 import { FONTS } from "../../QubitSketchFonts.js";
 import type { Grid } from "../model/CircuitGrid.js";
 import { cellAt, classifyColumn, columnHasControl } from "../model/CircuitGrid.js";
-import type { CircuitCell } from "../model/GateType.js";
-import { cellGate, cellsEqual, MAX_QUBITS, NUM_STEPS } from "../model/GateType.js";
 import type { QubitSketchModel } from "../model/QubitSketchModel.js";
 import { GateNode, RotationGateNode } from "./GateNode.js";
 

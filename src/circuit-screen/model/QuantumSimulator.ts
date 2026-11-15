@@ -10,12 +10,12 @@
  * GateType.ts for the matching display convention.
  */
 import { Complex, Vector3 } from "scenerystack/dot";
+import type { CircuitCell } from "../../common/model/GateType.js";
+import { cellGate, NUM_STEPS } from "../../common/model/GateType.js";
 import type { Grid } from "./CircuitGrid.js";
 import { cellAt, classifyColumn, columnHasControl } from "./CircuitGrid.js";
 import type { Complex2x2 } from "./GateMatrices.js";
 import { GATE_MATRICES, rotationMatrix } from "./GateMatrices.js";
-import type { CircuitCell } from "./GateType.js";
-import { cellGate, NUM_STEPS } from "./GateType.js";
 
 /**
  * The 2×2 unitary a cell applies, or null if the cell bears no gate

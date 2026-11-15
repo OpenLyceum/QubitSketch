@@ -10,9 +10,10 @@
  * `control`/`antiControl` cell sharing a column with a `controlledTarget`, and two `swap` cells
  * in one column exchange those wires.
  */
+
+import type { CircuitCell, GateType, RotationAxis } from "../../common/model/GateType.js";
 import type { MutableGrid } from "./CircuitGrid.js";
 import { emptyGrid } from "./CircuitGrid.js";
-import type { CircuitCell, GateType, RotationAxis } from "./GateType.js";
 
 type Grid = MutableGrid;
 

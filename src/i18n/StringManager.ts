@@ -6,7 +6,7 @@
  */
 import type { ReadOnlyProperty } from "scenerystack/axon";
 import { LocalizedString } from "scenerystack/chipper";
-import type { SelectedTool } from "../circuit-screen/model/GateType.js";
+import type { SelectedTool } from "../common/model/GateType.js";
 import stringsEn from "./strings_en.json";
 import stringsEs from "./strings_es.json";
 import stringsFr from "./strings_fr.json";

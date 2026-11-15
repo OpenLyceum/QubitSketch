@@ -7,11 +7,12 @@
  *
  * Endianness note: qubit `q[k]` maps to circuit row k (qubit 0 = least-significant bit).
  */
+
+import type { CircuitCell, GateType, RotationAxis } from "../../common/model/GateType.js";
+import { isAnyControl, MAX_QUBITS, MIN_QUBITS, NUM_STEPS } from "../../common/model/GateType.js";
 import type { MutableGrid } from "./CircuitGrid.js";
 import { emptyGrid } from "./CircuitGrid.js";
 import { isApplicableCircuit } from "./ColumnRules.js";
-import type { CircuitCell, GateType, RotationAxis } from "./GateType.js";
-import { isAnyControl, MAX_QUBITS, MIN_QUBITS, NUM_STEPS } from "./GateType.js";
 import { parseAngle } from "./QasmAngle.js";
 import { GATE_TO_QASM, SINGLE_CONTROL_QASM } from "./QasmMappings.js";
 

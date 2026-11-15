@@ -11,10 +11,11 @@
  *
  * Endianness note: circuit row k maps to qubit `q[k]` (qubit 0 = least-significant bit).
  */
+
+import type { CircuitCell, GateType, RotationAxis } from "../../common/model/GateType.js";
+import { cellGate, NUM_STEPS } from "../../common/model/GateType.js";
 import type { Grid } from "./CircuitGrid.js";
 import { cellAt, classifyColumn, columnHasControl } from "./CircuitGrid.js";
-import type { CircuitCell, GateType, RotationAxis } from "./GateType.js";
-import { cellGate, NUM_STEPS } from "./GateType.js";
 import { formatAngle } from "./QasmAngle.js";
 import { GATE_TO_QASM, ROT_TO_QASM, SINGLE_CONTROL_QASM } from "./QasmMappings.js";
 

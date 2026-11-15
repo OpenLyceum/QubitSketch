@@ -16,7 +16,7 @@
 
 import { logGlobal } from "scenerystack/phet-core";
 import { QueryStringMachine } from "scenerystack/query-string-machine";
-import { DEFAULT_QUBITS, MAX_QUBITS, MIN_QUBITS } from "../circuit-screen/model/GateType.js";
+import { DEFAULT_QUBITS, MAX_QUBITS, MIN_QUBITS } from "../common/model/GateType.js";
 import QubitSketchNamespace from "../QubitSketchNamespace.js";
 
 /**

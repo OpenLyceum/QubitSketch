@@ -4,7 +4,7 @@
  * The single source of truth mapping QubitSketch gates to their OpenQASM 2.0 names,
  * shared by the exporter (forward) and importer (reverse lookups derived from these).
  */
-import type { GateType, RotationAxis } from "./GateType.js";
+import type { GateType, RotationAxis } from "../../common/model/GateType.js";
 
 /** GateType key → single-qubit qasm gate name. */
 export const GATE_TO_QASM: Record<GateType, string> = {

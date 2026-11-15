@@ -24,11 +24,7 @@ import {
 import type { Complex, Vector3 } from "scenerystack/dot";
 import { Range } from "scenerystack/dot";
 import type { TModel } from "scenerystack/joist";
-import type { QubitSketchPreferencesModel } from "../../preferences/QubitSketchPreferencesModel.js";
-import type { Grid } from "./CircuitGrid.js";
-import { cellAt, classifyColumn, columnHasControl, emptyGrid, withCell } from "./CircuitGrid.js";
-import { censusColumn, isApplicableColumn } from "./ColumnRules.js";
-import type { CircuitCell, GateType, SelectedTool } from "./GateType.js";
+import type { CircuitCell, GateType, SelectedTool } from "../../common/model/GateType.js";
 import {
   cellsEqual,
   DEFAULT_QUBITS,
@@ -38,7 +34,11 @@ import {
   NUM_STEPS,
   ROTATION_TOOL_AXIS,
   SELECTED_TOOL_VALUES,
-} from "./GateType.js";
+} from "../../common/model/GateType.js";
+import type { QubitSketchPreferencesModel } from "../../preferences/QubitSketchPreferencesModel.js";
+import type { Grid } from "./CircuitGrid.js";
+import { cellAt, classifyColumn, columnHasControl, emptyGrid, withCell } from "./CircuitGrid.js";
+import { censusColumn, isApplicableColumn } from "./ColumnRules.js";
 import { computeBlochVectors, simulate } from "./QuantumSimulator.js";
 
 /** A position in the circuit grid. */

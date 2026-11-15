@@ -9,8 +9,8 @@
  * A grid is `circuit[qubit][step]`. Qubit 0 is the least-significant bit — see
  * GateType.ts for the matching display/endianness convention.
  */
-import type { CircuitCell } from "./GateType.js";
-import { EMPTY_CELL, MAX_QUBITS, NUM_STEPS } from "./GateType.js";
+import type { CircuitCell } from "../../common/model/GateType.js";
+import { EMPTY_CELL, MAX_QUBITS, NUM_STEPS } from "../../common/model/GateType.js";
 
 /** A read-only circuit grid: `grid[qubit][step]`. The shape most APIs accept. */
 export type Grid = ReadonlyArray<ReadonlyArray<CircuitCell>>;

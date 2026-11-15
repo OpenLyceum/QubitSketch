@@ -16,9 +16,16 @@
  * includes a payload whose columns are not shapes the simulator applies in full —
  * see the note on {@link deserialize}.
  */
+
+import type { CircuitCell, GateType, RotationAxis } from "../../common/model/GateType.js";
+import {
+  EMPTY_CELL,
+  GateType as GateTypeValues,
+  MAX_QUBITS,
+  MIN_QUBITS,
+  NUM_STEPS,
+} from "../../common/model/GateType.js";
 import { isApplicableCircuit } from "./ColumnRules.js";
-import type { CircuitCell, GateType, RotationAxis } from "./GateType.js";
-import { EMPTY_CELL, GateType as GateTypeValues, MAX_QUBITS, MIN_QUBITS, NUM_STEPS } from "./GateType.js";
 
 const FORMAT_VERSION = 1;
 const GATE_KEYS = new Set<string>(Object.values(GateTypeValues));

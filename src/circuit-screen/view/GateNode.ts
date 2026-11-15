@@ -5,9 +5,9 @@
  * with a bold label. Used in both the palette and the circuit grid.
  */
 import { Node, Rectangle, Text } from "scenerystack/scenery";
+import type { GateType, RotationAxis } from "../../common/model/GateType.js";
 import QubitSketchColors from "../../QubitSketchColors.js";
 import { scaledFont } from "../../QubitSketchFonts.js";
-import type { GateType, RotationAxis } from "../model/GateType.js";
 
 // Map gate type to its color property
 const GATE_COLOR_MAP = {

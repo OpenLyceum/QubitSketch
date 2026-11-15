@@ -21,10 +21,11 @@
  * The grid vocabulary itself (the `Grid` type, bounds-safe reads, the column classifier) lives in
  * CircuitGrid.ts; this module adds only the legality predicate on top of it.
  */
+
+import type { CircuitCell } from "../../common/model/GateType.js";
+import { isAnyControl, isGateBearing, MAX_QUBITS, NUM_STEPS } from "../../common/model/GateType.js";
 import type { Grid } from "./CircuitGrid.js";
 import { cellAt } from "./CircuitGrid.js";
-import type { CircuitCell } from "./GateType.js";
-import { isAnyControl, isGateBearing, MAX_QUBITS, NUM_STEPS } from "./GateType.js";
 
 /** How many cells of each role a single column holds. */
 export type ColumnCensus = {

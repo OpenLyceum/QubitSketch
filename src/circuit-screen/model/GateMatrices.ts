@@ -6,7 +6,7 @@
  * (QuantumSimulator.ts) applies them to the statevector.
  */
 import { Complex } from "scenerystack/dot";
-import type { GateType, RotationAxis } from "./GateType.js";
+import type { GateType, RotationAxis } from "../../common/model/GateType.js";
 
 /** A 2×2 matrix of complex numbers, row-major: m[row][col]. */
 export type Complex2x2 = readonly [readonly [Complex, Complex], readonly [Complex, Complex]];

@@ -9,13 +9,13 @@
  */
 import type { Vector2 } from "scenerystack/dot";
 import { Circle, DragListener, Line, Node, Rectangle, Text } from "scenerystack/scenery";
+import type { SelectedTool } from "../../common/model/GateType.js";
+import { GateType, ROTATION_TOOL_AXIS } from "../../common/model/GateType.js";
 import { StringManager } from "../../i18n/StringManager.js";
 import QubitSketchColors from "../../QubitSketchColors.js";
 import { scaledFont } from "../../QubitSketchFonts.js";
 import type { Complex2x2 } from "../model/GateMatrices.js";
 import { GATE_MATRICES, rotationMatrix } from "../model/GateMatrices.js";
-import type { SelectedTool } from "../model/GateType.js";
-import { GateType, ROTATION_TOOL_AXIS } from "../model/GateType.js";
 import type { QubitSketchModel } from "../model/QubitSketchModel.js";
 import type { SlotDropTarget } from "./CircuitCanvas.js";
 import { GATE_CORNER_RADIUS, GateNode, RotationGateNode } from "./GateNode.js";
