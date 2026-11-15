@@ -6,8 +6,8 @@
  * ignore), undo/redo history, and hidden-row handling.
  */
 import { describe, expect, it } from "vitest";
-import type { CircuitCell, SelectedTool } from "../src/circuit-screen/model/GateType.js";
 import { QubitSketchModel } from "../src/circuit-screen/model/QubitSketchModel.js";
+import type { CircuitCell, SelectedTool } from "../src/common/model/GateType.js";
 
 /** Places with the given tool at (qubit, step). */
 function place(model: QubitSketchModel, tool: SelectedTool, qubit: number, step: number): void {

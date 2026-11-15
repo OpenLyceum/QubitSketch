@@ -6,8 +6,8 @@
  * and the inspect-mode column prefix.
  */
 import { describe, expect, it } from "vitest";
-import type { CircuitCell } from "../src/circuit-screen/model/GateType.js";
 import { computeBlochVectors, simulate } from "../src/circuit-screen/model/QuantumSimulator.js";
+import type { CircuitCell } from "../src/common/model/GateType.js";
 import { ANTI, CTRL, grid, H, probs, SWAP, TARGET_X, X } from "./helpers.js";
 
 describe("simulate", () => {

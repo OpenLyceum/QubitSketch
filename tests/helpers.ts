@@ -4,8 +4,8 @@
  * Shared builders for the model/physics test suites.
  */
 import type { Complex } from "scenerystack/dot";
-import type { CircuitCell } from "../src/circuit-screen/model/GateType.js";
-import { EMPTY_CELL, MAX_QUBITS, NUM_STEPS } from "../src/circuit-screen/model/GateType.js";
+import type { CircuitCell } from "../src/common/model/GateType.js";
+import { EMPTY_CELL, MAX_QUBITS, NUM_STEPS } from "../src/common/model/GateType.js";
 
 /** Builds a full-size grid from sparse "qubit,step" → cell entries. */
 export function grid(cells: Record<string, CircuitCell>): CircuitCell[][] {

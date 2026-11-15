@@ -9,9 +9,9 @@
 import { describe, expect, it } from "vitest";
 import { deserialize, serialize } from "../src/circuit-screen/model/CircuitSerializer.js";
 import { censusColumn, isApplicableCircuit, isApplicableColumn } from "../src/circuit-screen/model/ColumnRules.js";
-import type { CircuitCell, SelectedTool } from "../src/circuit-screen/model/GateType.js";
 import { simulate } from "../src/circuit-screen/model/QuantumSimulator.js";
 import { QubitSketchModel } from "../src/circuit-screen/model/QubitSketchModel.js";
+import type { CircuitCell, SelectedTool } from "../src/common/model/GateType.js";
 import { ANTI, CTRL, grid, H, SWAP, TARGET_X } from "./helpers.js";
 
 function place(model: QubitSketchModel, tool: SelectedTool, qubit: number, step: number): void {
