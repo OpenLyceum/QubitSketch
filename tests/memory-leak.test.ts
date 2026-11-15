@@ -89,4 +89,15 @@ describe("Memory leak regression", () => {
   });
 });
 
-describeDisposalLeaks([]);
+describeDisposalLeaks([
+  {
+    name: "GatePalettePanel (drag-enabled)",
+    create: () => new GatePalettePanel(sharedModel, makeDragContext()),
+    idempotentDispose: true,
+  },
+  {
+    name: "GatePalettePanel (click-to-select)",
+    create: () => new GatePalettePanel(sharedModel),
+    idempotentDispose: true,
+  },
+]);
