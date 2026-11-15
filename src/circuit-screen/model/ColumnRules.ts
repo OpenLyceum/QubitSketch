@@ -77,7 +77,7 @@ export function isApplicableColumn(census: ColumnCensus): boolean {
  * a cell parked on a hidden wire re-enters the simulation the moment the user grows the wire
  * count, so legality has to hold for every wire count, not just the current one.
  */
-export function columnCells(circuit: Grid, step: number, rowCount: number = MAX_QUBITS): CircuitCell[] {
+function columnCells(circuit: Grid, step: number, rowCount: number = MAX_QUBITS): CircuitCell[] {
   const cells: CircuitCell[] = [];
   for (let q = 0; q < rowCount; q++) {
     cells.push(cellAt(circuit, q, step));

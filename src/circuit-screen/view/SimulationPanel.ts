@@ -19,7 +19,7 @@ import { BlochSpheresNode } from "./BlochSpheresNode.js";
 import { MeasurementHistogramNode } from "./MeasurementHistogramNode.js";
 import { ProbabilityBarsNode } from "./ProbabilityBarsNode.js";
 
-export const SIM_PANEL_CONTENT_WIDTH = 300;
+const SIM_PANEL_CONTENT_WIDTH = 300;
 
 // Fixed display heights so the stacked panel always fits the screen; the list
 // displays auto-scale their row height to these boxes.

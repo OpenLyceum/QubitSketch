@@ -51,11 +51,6 @@ export type CircuitCell =
 
 export const EMPTY_CELL: CircuitCell = { kind: "empty" };
 
-/** True if the cell is a filled control dot (conditions on |1⟩). */
-export function isControl(cell: CircuitCell): boolean {
-  return cell.kind === "control";
-}
-
 /** True if the cell is a control of either polarity (• on |1⟩ or ◦ on |0⟩). */
 export function isAnyControl(cell: CircuitCell): boolean {
   return cell.kind === "control" || cell.kind === "antiControl";

@@ -21,7 +21,7 @@ import { cellGate, NUM_STEPS } from "./GateType.js";
  * The 2×2 unitary a cell applies, or null if the cell bears no gate
  * (empty / control / anti-control / swap markers).
  */
-export function cellMatrix(cell: CircuitCell): Complex2x2 | null {
+function cellMatrix(cell: CircuitCell): Complex2x2 | null {
   if (cell.kind === "paramGate") {
     return rotationMatrix(cell.axis, cell.theta);
   }
@@ -41,7 +41,7 @@ export function cellMatrix(cell: CircuitCell): Complex2x2 | null {
  *
  * Mutates `state` in place.
  */
-export function applyControlledGate(
+function applyControlledGate(
   state: Complex[],
   target: number,
   onControls: readonly number[],
@@ -86,7 +86,7 @@ export function applyControlledGate(
  * Exchanges two wires (a SWAP gate) by swapping the amplitudes of every basis-state
  * pair that differs on exactly bits `a` and `b`. Mutates `state` in place.
  */
-export function applySwap(state: Complex[], a: number, b: number): void {
+function applySwap(state: Complex[], a: number, b: number): void {
   if (a === b) {
     return;
   }
