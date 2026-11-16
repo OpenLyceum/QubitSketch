@@ -86,7 +86,7 @@ function parseToken(token: string): CircuitCell | null {
 }
 
 /** Encodes the full circuit grid and qubit count to a compact JSON string. */
-export function serialize(circuit: ReadonlyArray<ReadonlyArray<CircuitCell>>, qubitCount: number): string {
+export function serialize(circuit: ReadonlyArray<readonly CircuitCell[]>, qubitCount: number): string {
   const rows = circuit.map((row) => row.map(cellToken).join(","));
   return JSON.stringify({ v: FORMAT_VERSION, q: qubitCount, c: rows });
 }

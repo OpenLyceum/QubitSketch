@@ -132,7 +132,7 @@ describe("simulate", () => {
 
 describe("computeBlochVectors", () => {
   it("|0⟩ points to +z; X|0⟩ to −z; H|0⟩ to +x; SH|0⟩ to +y", () => {
-    const cases: Array<[CircuitCell[][], [number, number, number]]> = [
+    const cases: [CircuitCell[][], [number, number, number]][] = [
       [grid({}), [0, 0, 1]],
       [grid({ "0,0": X }), [0, 0, -1]],
       [grid({ "0,0": H }), [1, 0, 0]],

@@ -13,7 +13,7 @@ import type { CircuitCell } from "../../common/model/GateType.js";
 import { EMPTY_CELL, MAX_QUBITS, NUM_STEPS } from "../../common/model/GateType.js";
 
 /** A read-only circuit grid: `grid[qubit][step]`. The shape most APIs accept. */
-export type Grid = ReadonlyArray<ReadonlyArray<CircuitCell>>;
+export type Grid = ReadonlyArray<readonly CircuitCell[]>;
 
 /** A mutable circuit grid, for the preset builders and importers that fill one in. */
 export type MutableGrid = CircuitCell[][];
@@ -72,7 +72,9 @@ export function classifyColumn(grid: Grid, step: number, n: number): ColumnShape
       case "paramGate":
         gateWires.push(q);
         break;
-      // "empty" contributes nothing.
+      case "empty":
+        // Contributes nothing.
+        break;
     }
   }
   return { onControls, offControls, swapWires, gateWires };
