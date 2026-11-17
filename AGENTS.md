@@ -49,7 +49,6 @@ strings live under the top-level `a11y` key in each locale JSON, via `StringMana
 
 ## Compliance carve-outs
 
-- `.github/workflows/ci.yml`: `unused-mode: advisory` until both Knip default and production baselines are reviewed and cleared ([Baton/doc/knip.md](https://github.com/OpenLyceum/Baton/blob/main/doc/knip.md)).
 - **Hardcoded colors:** any remaining non-profile fills are limited to matrix/tooltip debugging chrome; prefer `QubitSketchColors` for new UI.
 
 ## Testing
