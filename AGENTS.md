@@ -47,10 +47,6 @@ Follows the shared [OpenLyceum accessibility convention](https://github.com/Open
 via the `screenSummaryContent` super-option, and orders the PDOM through a wrapper `Node`. A11y
 strings live under the top-level `a11y` key in each locale JSON, via `StringManager.getA11yStrings()`.
 
-## Compliance carve-outs
-
-- **Hardcoded colors:** any remaining non-profile fills are limited to matrix/tooltip debugging chrome; prefer `QubitSketchColors` for new UI.
-
 ## Testing
 
 | Path | Purpose |
