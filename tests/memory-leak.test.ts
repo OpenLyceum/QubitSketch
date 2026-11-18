@@ -16,13 +16,16 @@
  * the global QubitSketchColors Properties no longer retain the panel.
  */
 
-import type { Vector2 } from "scenerystack/dot";
+import { Vector2 } from "scenerystack/dot";
 import { Node } from "scenerystack/scenery";
 import { describe, expect, it } from "vitest";
+import { GATE_MATRICES } from "../src/circuit-screen/model/GateMatrices.js";
 import { QubitSketchModel } from "../src/circuit-screen/model/QubitSketchModel.js";
 import type { SlotDropTarget } from "../src/circuit-screen/view/CircuitCanvas.js";
 import { GatePalettePanel, type PaletteDragContext } from "../src/circuit-screen/view/GatePalettePanel.js";
-import { describeDisposalLeaks, forceGC } from "./helpers/memoryLeak.js";
+import { MatrixTooltipNode } from "../src/circuit-screen/view/MatrixTooltipNode.js";
+import { StringManager } from "../src/i18n/StringManager.js";
+import { describeDisposalLeaks, expectNoListenerGrowth, forceGC } from "./helpers/memoryLeak.js";
 
 // Long-lived model sentinel: stays alive across tests so that a disposed panel
 // must drop its own reference (unlink selectedToolProperty) to be collectible.
@@ -101,3 +104,87 @@ describeDisposalLeaks([
     idempotentDispose: true,
   },
 ]);
+
+// GatePalettePanel builds a new MatrixTooltipNode on every palette hover and disposes it on exit
+// (or on the next hover). The tooltip's description Text links to a localized string Property
+// that outlives the panel, so a tooltip whose content is not disposed stays reachable from it.
+const descriptions = StringManager.getInstance().getToolDescriptions();
+
+describeDisposalLeaks([
+  {
+    name: "MatrixTooltipNode (gate matrix)",
+    create: () => new MatrixTooltipNode(GATE_MATRICES.H, descriptions.H),
+    keepAlive: () => [descriptions.H],
+  },
+  {
+    name: "MatrixTooltipNode (marker, no matrix)",
+    create: () => new MatrixTooltipNode(null, descriptions.eraser),
+    keepAlive: () => [descriptions.eraser],
+  },
+]);
+
+describe("palette hover tooltips", () => {
+  type HoverListener = { enter?: (event: unknown) => void; exit?: (event: unknown) => void };
+
+  /** The palette hit-areas (one PDOM button per tool), in ALL_TOOLS order. */
+  function hitAreas(panel: Node): Node[] {
+    const areas: Node[] = [];
+    const visit = (node: Node): void => {
+      if (node.tagName === "button") {
+        areas.push(node);
+      }
+      node.children.forEach(visit);
+    };
+    visit(panel);
+    return areas;
+  }
+
+  function hover(area: Node, phase: "enter" | "exit"): void {
+    const event = { pointer: { point: new Vector2(10, 10) } };
+    // Only the palette's own plain-object hover listener; DragListener has its own enter/exit.
+    for (const listener of area.inputListeners as HoverListener[]) {
+      if (Object.getPrototypeOf(listener) === Object.prototype) {
+        listener[phase]?.(event);
+      }
+    }
+  }
+
+  it("entering and leaving tool buttons keeps description listener counts flat", async () => {
+    const dragContext = makeDragContext();
+    const panel = new GatePalettePanel(sharedModel, dragContext);
+    const areas = hitAreas(panel);
+    const [hArea, xArea, eraserArea] = [areas[0]!, areas[1]!, areas.at(-1)!];
+    await expectNoListenerGrowth([descriptions.H, descriptions.X, descriptions.eraser], () => {
+      hover(hArea, "enter");
+      hover(xArea, "enter"); // replaces the H tooltip without an exit
+      hover(xArea, "exit");
+      hover(eraserArea, "enter");
+      hover(eraserArea, "exit");
+    });
+    expect(dragContext.overlayLayer.children).toHaveLength(0);
+    panel.dispose();
+  });
+
+  it("the previous tooltip and its content are collected after the pointer leaves", async () => {
+    const dragContext = makeDragContext();
+    const panel = new GatePalettePanel(sharedModel, dragContext);
+    const area = hitAreas(panel)[0]!;
+    const hoverOnce = (): WeakRef<object>[] => {
+      hover(area, "enter");
+      const tooltip = dragContext.overlayLayer.children[0]!;
+      expect(tooltip).toBeInstanceOf(MatrixTooltipNode);
+      const refs = [new WeakRef<object>(tooltip)];
+      const visit = (node: Node): void => {
+        refs.push(new WeakRef<object>(node));
+        node.children.forEach(visit);
+      };
+      tooltip.children.forEach(visit);
+      hover(area, "exit");
+      return refs;
+    };
+    const refs = [...hoverOnce(), ...hoverOnce()];
+    await forceGC(refs);
+    expect(refs.filter((ref) => ref.deref() !== undefined).length, "tooltip nodes retained").toBe(0);
+    panel.dispose();
+  });
+});

@@ -63,7 +63,7 @@ Actual specs:
 - `tests/qubit-sketch-model.test.ts` — placement guards (column shapes), undo/redo history
 - `tests/column-rules.test.ts` — the shared legality predicate + all three writers; includes a 4000-edit editor fuzz asserting the invariant holds over the whole grid after every reachable edit
 - `tests/display-utils.test.ts` — amplitude/phase formatting (consistent U+2212 minus, no negative zero)
-- `tests/memory-leak.test.ts` (covers `GatePalettePanel.dispose()` — palette drag previews and tooltips link global color Properties)
+- `tests/memory-leak.test.ts` (covers `GatePalettePanel.dispose()` — palette drag previews and tooltips link global color Properties; hover enter/exit cycles release each `MatrixTooltipNode` and its description Text)
 - Shared grid/cell builders live in `tests/helpers.ts`
 
 Run `npm test`. CI runs the suite when a `test` script is present.

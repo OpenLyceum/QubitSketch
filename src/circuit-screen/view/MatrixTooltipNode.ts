@@ -19,6 +19,8 @@ const BRACKET_GAP = 6;
 const BRACKET_TICK = 5;
 
 export class MatrixTooltipNode extends Panel {
+  private readonly content: Node;
+
   public constructor(matrix: Complex2x2 | null, descriptionProperty: ReadOnlyProperty<string>) {
     const children: Node[] = [];
     if (matrix !== null) {
@@ -32,13 +34,25 @@ export class MatrixTooltipNode extends Panel {
       }),
     );
 
-    super(new VBox({ align: "left", spacing: 8, children }), {
+    const content = new VBox({ align: "left", spacing: 8, children });
+    super(content, {
       fill: QubitSketchColors.panelBackgroundColorProperty,
       stroke: QubitSketchColors.panelBorderColorProperty,
       cornerRadius: 6,
       xMargin: 10,
       yMargin: 8,
     });
+    this.content = content;
+  }
+
+  /**
+   * A tooltip is built on every palette hover. Panel.dispose() leaves its content alone, and the
+   * description Text links to a localized string Property that outlives the palette, so dispose
+   * the content too (after super, which still unhooks the Panel's own content listeners).
+   */
+  public override dispose(): void {
+    super.dispose();
+    this.content.disposeSubtree();
   }
 }
 

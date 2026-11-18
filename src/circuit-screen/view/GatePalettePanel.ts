@@ -92,8 +92,8 @@ export class GatePalettePanel extends Node {
     const hideTooltip = (): void => {
       if (activeTooltip !== null && overlayLayer !== undefined) {
         overlayLayer.removeChild(activeTooltip);
-        // removeChild does not dispose: the tooltip links to global
-        // QubitSketchColors Properties, so dispose it to release those links.
+        // removeChild does not dispose: the tooltip links to global color and
+        // localized description Properties, so dispose it to release those links.
         activeTooltip.dispose();
         activeTooltip = null;
       }
