@@ -8,23 +8,33 @@
  * Endianness note: qubit `q[k]` maps to circuit row k (qubit 0 = least-significant bit).
  */
 
-import type { CircuitCell, GateType, RotationAxis } from "../../common/model/GateType.js";
-import { isAnyControl, MAX_QUBITS, MIN_QUBITS, NUM_STEPS } from "../../common/model/GateType.js";
+import {
+  type CircuitCell,
+  GateType,
+  isAnyControl,
+  MAX_QUBITS,
+  MIN_QUBITS,
+  NUM_STEPS,
+  type RotationAxis,
+} from "../../common/model/GateType.js";
 import type { MutableGrid } from "./CircuitGrid.js";
 import { emptyGrid } from "./CircuitGrid.js";
 import { isApplicableCircuit } from "./ColumnRules.js";
 import { parseAngle } from "./QasmAngle.js";
-import { GATE_TO_QASM, SINGLE_CONTROL_QASM } from "./QasmMappings.js";
+import { GATE_TO_QASM, ROT_TO_QASM, SINGLE_CONTROL_QASM } from "./QasmMappings.js";
 
 // Reverse lookup tables, derived from the forward maps so the two directions cannot drift.
-const QASM_TO_GATE: Record<string, GateType> = Object.fromEntries(
-  Object.entries(GATE_TO_QASM).map(([gate, name]) => [name, gate as GateType]),
-) as Record<string, GateType>;
-const QASM_CONTROL_TO_GATE: Record<string, GateType> = Object.fromEntries(
-  Object.entries(SINGLE_CONTROL_QASM).map(([gate, name]) => [name as string, gate as GateType]),
-) as Record<string, GateType>;
-const QASM_TO_AXIS: Record<string, RotationAxis> = { rx: "X", ry: "Y", rz: "Z" };
-const QASM_CONTROL_TO_AXIS: Record<string, RotationAxis> = { crx: "X", cry: "Y", crz: "Z" };
+const QASM_TO_GATE = new Map(Object.values(GateType).map((gate) => [GATE_TO_QASM[gate], gate]));
+const QASM_CONTROL_TO_GATE = new Map<string, GateType>();
+for (const gate of Object.values(GateType)) {
+  const name = SINGLE_CONTROL_QASM[gate];
+  if (name !== undefined) {
+    QASM_CONTROL_TO_GATE.set(name, gate);
+  }
+}
+const ROTATION_AXES = ["X", "Y", "Z"] as const satisfies readonly RotationAxis[];
+const QASM_TO_AXIS = new Map(ROTATION_AXES.map((axis) => [ROT_TO_QASM[axis].single, axis]));
+const QASM_CONTROL_TO_AXIS = new Map(ROTATION_AXES.map((axis) => [ROT_TO_QASM[axis].controlled, axis]));
 
 /** Statements with no effect on our unitary, statevector model — silently ignored on import. */
 const IGNORED_STATEMENTS = new Set(["openqasm", "include", "creg", "barrier", "measure"]);
@@ -78,14 +88,14 @@ function parseSingleQubitStatement(name: string, param: string | undefined, oper
   if (wire === undefined) {
     return null;
   }
-  if (name in QASM_TO_GATE) {
-    const gate = QASM_TO_GATE[name];
-    return gate === undefined ? null : spanOp([{ wire, cell: { kind: "gate", gate } }]);
+  const gate = QASM_TO_GATE.get(name);
+  if (gate !== undefined) {
+    return spanOp([{ wire, cell: { kind: "gate", gate } }]);
   }
-  if (name in QASM_TO_AXIS) {
-    const axis = QASM_TO_AXIS[name];
+  const axis = QASM_TO_AXIS.get(name);
+  if (axis !== undefined) {
     const theta = param === undefined ? null : parseAngle(param);
-    return axis === undefined || theta === null ? null : spanOp([{ wire, cell: { kind: "paramGate", axis, theta } }]);
+    return theta === null ? null : spanOp([{ wire, cell: { kind: "paramGate", axis, theta } }]);
   }
   return null;
 }
@@ -95,20 +105,18 @@ function parseMultiQubitStatement(name: string, param: string | undefined, opera
   const [a, b, c] = operands;
 
   // Single-control fixed gate (cx, cy, cz, ch).
-  if (name in QASM_CONTROL_TO_GATE && operands.length === 2 && a !== undefined && b !== undefined) {
-    const gate = QASM_CONTROL_TO_GATE[name];
-    return gate === undefined
-      ? null
-      : spanOp([
-          { wire: a, cell: { kind: "control" } },
-          { wire: b, cell: { kind: "controlledTarget", gate } },
-        ]);
+  const gate = QASM_CONTROL_TO_GATE.get(name);
+  if (gate !== undefined && operands.length === 2 && a !== undefined && b !== undefined) {
+    return spanOp([
+      { wire: a, cell: { kind: "control" } },
+      { wire: b, cell: { kind: "controlledTarget", gate } },
+    ]);
   }
   // Single-control rotation (crx, cry, crz).
-  if (name in QASM_CONTROL_TO_AXIS && operands.length === 2 && a !== undefined && b !== undefined) {
-    const axis = QASM_CONTROL_TO_AXIS[name];
+  const axis = QASM_CONTROL_TO_AXIS.get(name);
+  if (axis !== undefined && operands.length === 2 && a !== undefined && b !== undefined) {
     const theta = param === undefined ? null : parseAngle(param);
-    return axis === undefined || theta === null
+    return theta === null
       ? null
       : spanOp([
           { wire: a, cell: { kind: "control" } },
