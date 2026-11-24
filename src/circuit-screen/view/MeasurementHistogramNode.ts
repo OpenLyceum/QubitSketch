@@ -15,7 +15,7 @@
  * distributions.
  */
 import { Property, type ReadOnlyProperty } from "scenerystack/axon";
-import { dotRandom } from "scenerystack/dot";
+import { dotRandom, roundSymmetric } from "scenerystack/dot";
 import { Node, Rectangle, Text } from "scenerystack/scenery";
 import { FlatAppearanceStrategy, RectangularPushButton } from "scenerystack/sun";
 import { StringManager } from "../../i18n/StringManager.js";
@@ -102,7 +102,7 @@ export class MeasurementHistogramNode extends Node {
       bars.removeAllChildren();
       const total = shots.reduce((a, b) => a + b, 0);
       totalText.string = `${total} shot${total === 1 ? "" : "s"}`;
-      const n = Math.round(Math.log2(shots.length));
+      const n = roundSymmetric(Math.log2(shots.length));
       const rowHeight = Math.min(MAX_ROW_HEIGHT, boxHeight / shots.length);
       const font = basisRowFont(rowHeight);
 

@@ -8,6 +8,8 @@
  * Data extracted verbatim from matplotlib (lib/matplotlib/_cm_listed.py, `_twilight_data`),
  * rounded to 8-bit channels. 510 entries: index 0 ↔ t=0, index 509 ↔ t=1.
  */
+
+import { roundSymmetric } from "scenerystack/dot";
 import { Color } from "scenerystack/scenery";
 
 const TWILIGHT_LUT: ReadonlyArray<readonly [number, number, number]> = [
@@ -536,5 +538,9 @@ export function twilightColor(t: number): Color {
   // noUncheckedIndexedAccess without a non-null assertion.
   const [r0, g0, b0] = TWILIGHT_LUT[i] ?? [0, 0, 0];
   const [r1, g1, b1] = TWILIGHT_LUT[i + 1] ?? [0, 0, 0];
-  return new Color(Math.round(r0 + (r1 - r0) * f), Math.round(g0 + (g1 - g0) * f), Math.round(b0 + (b1 - b0) * f));
+  return new Color(
+    roundSymmetric(r0 + (r1 - r0) * f),
+    roundSymmetric(g0 + (g1 - g0) * f),
+    roundSymmetric(b0 + (b1 - b0) * f),
+  );
 }

@@ -10,7 +10,7 @@
  */
 import type { ReadOnlyProperty } from "scenerystack/axon";
 import type { Complex } from "scenerystack/dot";
-import { toFixed } from "scenerystack/dot";
+import { roundSymmetric, toFixed } from "scenerystack/dot";
 import { Node, Text } from "scenerystack/scenery";
 import { StringManager } from "../../i18n/StringManager.js";
 import QubitSketchColors from "../../QubitSketchColors.js";
@@ -26,9 +26,9 @@ export class AmplitudeTableNode extends Node {
     super();
 
     // Column x-positions scaled to the available width.
-    const colAmplitude = Math.round(width * 0.2);
-    const colMagnitude = Math.round(width * 0.62);
-    const colPhase = Math.round(width * 0.84);
+    const colAmplitude = roundSymmetric(width * 0.2);
+    const colMagnitude = roundSymmetric(width * 0.62);
+    const colPhase = roundSymmetric(width * 0.84);
 
     const headers = StringManager.getInstance().getTableHeaders();
     const headerFont = "bold 10px monospace";
@@ -73,7 +73,7 @@ export class AmplitudeTableNode extends Node {
 
     stateVectorProperty.link((state) => {
       body.removeAllChildren();
-      const n = Math.round(Math.log2(state.length));
+      const n = roundSymmetric(Math.log2(state.length));
       const rowHeight = Math.min(MAX_ROW_HEIGHT, Math.max(1, (boxHeight - HEADER_HEIGHT) / state.length));
       const font = basisRowFont(rowHeight);
 

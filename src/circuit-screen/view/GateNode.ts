@@ -4,6 +4,8 @@
  * Visual representation of a single quantum gate — a colored rounded rectangle
  * with a bold label. Used in both the palette and the circuit grid.
  */
+
+import { roundSymmetric } from "scenerystack/dot";
 import { Node, Rectangle, Text } from "scenerystack/scenery";
 import type { GateType, RotationAxis } from "../../common/model/GateType.js";
 import QubitSketchColors from "../../QubitSketchColors.js";
@@ -132,7 +134,7 @@ export class RotationGateNode extends Node {
     );
 
     if (showAngle) {
-      const deg = Math.round((theta * HALF_TURN_DEGREES) / Math.PI);
+      const deg = roundSymmetric((theta * HALF_TURN_DEGREES) / Math.PI);
       this.addChild(
         new Text(`${deg}°`, {
           font: scaledFont(Math.floor(size * ROTATION_ANGLE_SCALE)),
