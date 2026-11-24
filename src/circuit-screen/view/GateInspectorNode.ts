@@ -7,7 +7,7 @@
  * the circuit automatically through the model's DerivedProperty chain.
  */
 import { DerivedProperty, NumberProperty } from "scenerystack/axon";
-import { Dimension2, moduloBetweenDown, Range } from "scenerystack/dot";
+import { Dimension2, moduloBetweenDown, Range, roundSymmetric } from "scenerystack/dot";
 import { Text, VBox } from "scenerystack/scenery";
 import { HSlider, Panel } from "scenerystack/sun";
 import { StringManager } from "../../i18n/StringManager.js";
@@ -30,7 +30,7 @@ export class GateInspectorNode extends Panel {
 
     const valueStringProperty = new DerivedProperty(
       [angleProperty, angleStringProperty],
-      (theta, label) => `${label}: ${Math.round((theta * 180) / Math.PI)}°`,
+      (theta, label) => `${label}: ${roundSymmetric((theta * 180) / Math.PI)}°`,
     );
     const valueText = new Text(valueStringProperty, {
       font: FONTS.body,

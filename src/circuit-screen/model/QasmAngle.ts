@@ -1,3 +1,4 @@
+import { roundSymmetric } from "scenerystack/dot";
 /**
  * QasmAngle.ts
  *
@@ -8,7 +9,7 @@
 
 /** Formats a rotation angle (radians) compactly, e.g. 1.5707963 → "1.570796". */
 export function formatAngle(theta: number): string {
-  return String(Math.round(theta * 1e6) / 1e6);
+  return String(roundSymmetric(theta * 1e6) / 1e6);
 }
 
 /**

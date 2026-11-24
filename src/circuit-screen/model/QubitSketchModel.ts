@@ -22,7 +22,7 @@ import {
   StringUnionProperty,
 } from "scenerystack/axon";
 import type { Complex, Vector3 } from "scenerystack/dot";
-import { Range } from "scenerystack/dot";
+import { Range, roundSymmetric } from "scenerystack/dot";
 import type { TModel } from "scenerystack/joist";
 import type { CircuitCell, GateType, SelectedTool } from "../../common/model/GateType.js";
 import {
@@ -157,7 +157,7 @@ export class QubitSketchModel implements TModel {
 
   /** Rounds and clamps a requested qubit count into the supported [MIN_QUBITS, MAX_QUBITS] range. */
   private static clampQubitCount(count: number): number {
-    return Math.max(MIN_QUBITS, Math.min(MAX_QUBITS, Math.round(count)));
+    return Math.max(MIN_QUBITS, Math.min(MAX_QUBITS, roundSymmetric(count)));
   }
 
   /**
@@ -302,7 +302,7 @@ export class QubitSketchModel implements TModel {
    * clamped into [0, NUM_STEPS]. This is transient view state, so it records no undo history.
    */
   public setInspectStep(step: number | null): void {
-    this._inspectStepProperty.value = step === null ? null : Math.max(0, Math.min(NUM_STEPS, Math.round(step)));
+    this._inspectStepProperty.value = step === null ? null : Math.max(0, Math.min(NUM_STEPS, roundSymmetric(step)));
   }
 
   /** Writes a single cell, replacing the grid immutably. Low-level — does not record history. */

@@ -137,6 +137,7 @@ describe("QasmSerializer", () => {
   });
 
   it("rejects unsupported programs cleanly", () => {
+    expect(qasmToCircuit(`${QASM_HEADER}qreg q[2];\nconstructor q[0];\n`)).toBeNull();
     expect(qasmToCircuit(`${QASM_HEADER}qreg q[2];\nmystery q[0];\n`)).toBeNull();
     expect(qasmToCircuit(`${QASM_HEADER}qreg q[2];\nqreg r[2];\n`)).toBeNull();
     expect(qasmToCircuit(`${QASM_HEADER}qreg q[9];\n`)).toBeNull();

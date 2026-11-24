@@ -12,7 +12,7 @@
  */
 import type { ReadOnlyProperty } from "scenerystack/axon";
 import type { Complex } from "scenerystack/dot";
-import { toFixed } from "scenerystack/dot";
+import { roundSymmetric, toFixed } from "scenerystack/dot";
 import { Node, Rectangle, Text } from "scenerystack/scenery";
 import QubitSketchColors from "../../QubitSketchColors.js";
 import { basisRowFont, ketLabel, phaseToColor } from "./displayUtils.js";
@@ -43,7 +43,7 @@ export class ProbabilityBarsNode extends Node {
 
     stateVectorProperty.link((state) => {
       barsLayer.removeAllChildren();
-      const n = Math.round(Math.log2(state.length));
+      const n = roundSymmetric(Math.log2(state.length));
       const rowHeight = Math.min(MAX_ROW_HEIGHT, barsHeight / state.length);
       const font = basisRowFont(rowHeight);
 

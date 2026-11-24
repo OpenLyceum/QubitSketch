@@ -17,6 +17,7 @@
  * see the note on {@link deserialize}.
  */
 
+import { roundSymmetric } from "scenerystack/dot";
 import type { CircuitCell, GateType, RotationAxis } from "../../common/model/GateType.js";
 import {
   EMPTY_CELL,
@@ -114,14 +115,15 @@ export function deserialize(text: string): { circuit: CircuitCell[][]; qubitCoun
   if (record.v !== FORMAT_VERSION || !Array.isArray(record.c)) {
     return null;
   }
-  const rows = record.c as unknown[];
+  const rows: readonly unknown[] = record.c;
 
   const rawCount = typeof record.q === "number" ? record.q : 1;
-  const qubitCount = Math.max(MIN_QUBITS, Math.min(MAX_QUBITS, Math.round(rawCount)));
+  const qubitCount = Math.max(MIN_QUBITS, Math.min(MAX_QUBITS, roundSymmetric(rawCount)));
 
   const circuit: CircuitCell[][] = [];
   for (let q = 0; q < MAX_QUBITS; q++) {
-    const rowStr = typeof rows[q] === "string" ? (rows[q] as string) : "";
+    const encodedRow = rows[q];
+    const rowStr = typeof encodedRow === "string" ? encodedRow : "";
     const tokens = rowStr === "" ? [] : rowStr.split(",");
     const row: CircuitCell[] = [];
     for (let s = 0; s < NUM_STEPS; s++) {

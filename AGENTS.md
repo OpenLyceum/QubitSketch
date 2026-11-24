@@ -73,3 +73,7 @@ Run `npm test`. CI runs the suite when a `test` script is present.
 - URL hash `#circuit=…` shares circuits; QASM dialog for export/import (teaching subset). Undo/redo (Ctrl+Z / Ctrl+Y); inspect mode scrubs columns without changing stored circuit.
 - **Adding a gate:** key in `GateType.ts` → matrix in `GateMatrices.ts` → color in `QubitSketchColors.ts` → maps in `GateNode.ts` → `ALL_TOOLS` in `GatePalettePanel.ts` → locale JSON + `StringManager.getToolDescriptions()`.
 - Non-goals: arithmetic/QFT/Grover gates; time-animated gates; mid-circuit collapsing measurement; one target gate per column when controls present.
+
+## Compliance carve-outs
+
+None.
